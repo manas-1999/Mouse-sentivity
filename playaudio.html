@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .style-buttons
+        {
+            max-width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: brown;
+        }
+        .buttons
+        {
+            width: 12%;
+            padding: 18px 18px 18px 18px;
+            margin-bottom: 10px;
+        }
+        .c1
+        {
+            background-color: red;
+            color: #ffff;
+            border: none;
+            outline: none;
+        }
+        .c2
+        {
+            background-color: green;
+            color: #ffff;
+            border: none;
+            outline: none;
+        }
+        @media screen and (max-width: 800px) {
+         .buttons {
+          width: 36%; 
+    }
+    .style-buttons
+    {
+        height: 97vh;
+    }
+     }
+
+    </style>
+</head>
+<body>
+    <div class="style-buttons">
+
+    <button type="submit" class="buttons c1" id="clicked">Play a song for me</button>
+    <button type="submit" class="buttons c2" id="clicked2">Stop</button>
+    </div>
+
+   
+
+    <script>
+         
+         var audio=new Audio('Aalu Le Le ! Comedy ! Hindi ! Funny.mp3');
+        document.getElementById("clicked").addEventListener("click",hello);
+        function hello()
+        {
+           
+            audio.play();
+        }
+
+
+        document.getElementById("clicked2").addEventListener("click",hello2);
+        function hello2()
+        {
+
+            audio.pause();
+        }
+    </script>
+</body>
+</html>
