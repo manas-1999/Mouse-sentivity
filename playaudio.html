@@ -44,12 +44,18 @@
     {
         height: 97vh;
     }
-     }
+    
+}
+h1{
+        color: #ffff;
+        text-align: center;
+    }
 
     </style>
 </head>
 <body>
     <div class="style-buttons">
+        <h1 class="head-text">Click the button to Random choose a song by computer to you</h1>
 
     <button type="submit" class="buttons c1" id="clicked">Play a song for me</button>
     <button type="submit" class="buttons c2" id="clicked2">Stop</button>
@@ -59,12 +65,32 @@
 
     <script>
          
-         var audio=new Audio('Aalu Le Le ! Comedy ! Hindi ! Funny.mp3');
+         var audio1=new Audio('Aalu Le Le ! Comedy ! Hindi ! Funny.mp3');
+         var audio2=new Audio('Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3');
+         var audio3=new Audio('Khairiyat (Happy) - Arijit Singh.mp3');
+         var stop_res;
+         function random()
+         {
+             return 1+(Math.random() * 3);
+         }
         document.getElementById("clicked").addEventListener("click",hello);
         function hello()
         {
-           
-            audio.play();
+            var res=random();
+            console.log(res);
+            stop_res=res;
+              if(res>=1 && res<2 )
+              {
+                audio2.play();
+              }
+              else if(res>=2 && res<3)
+              {
+                  audio1.play();
+              }
+              else if(res>=3 && res<4)
+              {
+                  audio3.play();
+              }
         }
 
 
@@ -72,7 +98,19 @@
         function hello2()
         {
 
-            audio.pause();
+            if(stop_res>=1 && stop_res<2 )
+              {
+                audio2.pause();
+              }
+              else if(stop_res>=2 && stop_res<3)
+              {
+                  audio1.pause();
+              }
+              else if(stop_res>=3 && stop_res<4)
+              {
+                  
+                  audio3.pause();
+              }
         }
     </script>
 </body>
