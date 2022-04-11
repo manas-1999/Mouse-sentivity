@@ -46,6 +46,9 @@
     }
     
 }
+.song-title{
+    color: #ffff;
+}
 h1{
         color: #ffff;
         text-align: center;
@@ -55,6 +58,10 @@ h1{
 </head>
 <body>
     <div class="style-buttons">
+        <div class="song-title">
+           <h2>Song Name</h2>
+           <p id="song-name"></p>
+        </div>
         <h1 class="head-text">Click the button to Random choose a song by computer to you</h1>
 
     <button type="submit" class="buttons c1" id="clicked">Play a song for me</button>
@@ -64,53 +71,91 @@ h1{
    
 
     <script>
+        var audio1='Aalu Le Le ! Comedy ! Hindi ! Funny.mp3';
+        var audio2='Khairiyat (Happy) - Arijit Singh.mp3';
+        var audio3='Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3';
          
-         var audio1=new Audio('Aalu Le Le ! Comedy ! Hindi ! Funny.mp3');
-         var audio2=new Audio('Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3');
-         var audio3=new Audio('Khairiyat (Happy) - Arijit Singh.mp3');
+         var playlist=[
+             {
+                 id:0,
+                 name:"Tujhe Bhoolna Toh Chaaha",
+                 file_name:"Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3"
+             },
+             {
+                id:1,
+                 name:"Khairiyat (Happy)",
+                 file_name:"Khairiyat (Happy) - Arijit Singh.mp3"
+             },
+             {
+                id:2,
+                 name:"Aalu Le Le ! Comedy ! Hindi ! Funny",
+                 file_name:"Aalu Le Le ! Comedy ! Hindi ! Funny.mp3"
+             },
+             {
+                id:3,
+                 name:"Baarish Ban Jaana - Payal Dev",
+                 file_name:"00000. Baarish Ban Jaana - Payal Dev 320 Kbps.mp3"
+             },
+             {
+                id:4,
+                 name:"Dekhte-Dekhte-Atif-Aslam",
+                 file_name:"0. Dekhte-Dekhte-Atif-Aslam.mp3"
+             },
+             {
+                id:5,
+                 name:"Tujhe_Kitna_Chahne_Lage",
+                 file_name:"00000. Tujhe_Kitna_Chahne_Lage.mp3"
+             },
+             {
+                id:6,
+                 name:"Ve Maahi - Kesari",
+                 file_name:"00. Ve Maahi - Kesari.mp3"
+             },
+             {
+                id:7,
+                 name:"Raataan Lambiyan - Shershaah",
+                 file_name:"Raataan Lambiyan - Shershaah.mp3"
+             },
+             {
+                id:8,
+                 name:"Chale Aana",
+                 file_name:"0. Chale Aana.mp3"
+             },
+             {
+                id:9,
+                 name:"Veham - Armaan Malik",
+                 file_name:"0000. Veham - Armaan Malik.mp3"
+             },
+             {
+                id:10,
+                 name:"Nayan - Dhvani Bhanushali",
+                 file_name:"0000. Nayan - Dhvani Bhanushali.mp3"
+             },
+             
+         ]
          var stop_res;
+         var audio=new Audio();
          function random()
          {
-             return 1+(Math.random() * 3);
+             return Math.floor(Math.random() * 10);
          }
         document.getElementById("clicked").addEventListener("click",hello);
         function hello()
         {
+            
             var res=random();
             console.log(res);
             stop_res=res;
-              if(res>=1 && res<2 )
-              {
-                audio2.play();
-              }
-              else if(res>=2 && res<3)
-              {
-                  audio1.play();
-              }
-              else if(res>=3 && res<4)
-              {
-                  audio3.play();
-              }
+            document.getElementById("song-name").innerText=playlist[res].name
+            audio=new Audio(playlist[res].file_name);
+            audio.play();
         }
 
 
         document.getElementById("clicked2").addEventListener("click",hello2);
         function hello2()
         {
-
-            if(stop_res>=1 && stop_res<2 )
-              {
-                audio2.pause();
-              }
-              else if(stop_res>=2 && stop_res<3)
-              {
-                  audio1.pause();
-              }
-              else if(stop_res>=3 && stop_res<4)
-              {
-                  
-                  audio3.pause();
-              }
+             audio.pause();
         }
     </script>
 </body>
