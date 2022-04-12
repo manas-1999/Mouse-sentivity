@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- //bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- //// -->
     <title>Document</title>
     <style>
         .style-buttons
@@ -44,6 +50,10 @@
     {
         height: 97vh;
     }
+    #t-body
+    {
+        width: 50%;
+    }
     
 }
 .song-title{
@@ -56,16 +66,25 @@ h1{
 
     /* table styling */
 
+    .table
+    {
+        display: flex;
+        justify-content: center;
+
+    }
+
     table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 80%;
+  
 }
 
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  text-align: center;
 }
 
 tr:nth-child(even) {
@@ -93,7 +112,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-    <div class="table">
+    <div class="table-responsive">
 
         <!-- table -->
         <table id="t-body">
@@ -141,57 +160,68 @@ tr:nth-child(even) {
              {
                  id:0,
                  name:"Tujhe Bhoolna Toh Chaaha",
-                 file_name:"Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3"
+                 file_name:"Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3",
+                 artist:"Jubin-nautiyal"
              },
              {
                 id:1,
                  name:"Khairiyat (Happy)",
-                 file_name:"Khairiyat (Happy) - Arijit Singh.mp3"
+                 file_name:"Khairiyat (Happy) - Arijit Singh.mp3",
+                 artist:"Arijit Singh"
              },
              {
                 id:2,
                  name:"Aalu Le Le ! Comedy ! Hindi ! Funny",
-                 file_name:"Aalu Le Le ! Comedy ! Hindi ! Funny.mp3"
+                 file_name:"Aalu Le Le ! Comedy ! Hindi ! Funny.mp3",
+                 artist:"Pratibha"
              },
              {
                 id:3,
-                 name:"Baarish Ban Jaana - Payal Dev",
-                 file_name:"00000. Baarish Ban Jaana - Payal Dev 320 Kbps.mp3"
+                 name:"Baarish Ban Jaana",
+                 file_name:"00000. Baarish Ban Jaana - Payal Dev 320 Kbps.mp3",
+                 artist:"Payal-Dev"
              },
              {
                 id:4,
                  name:"Dekhte-Dekhte-Atif-Aslam",
-                 file_name:"0. Dekhte-Dekhte-Atif-Aslam.mp3"
+                 file_name:"0. Dekhte-Dekhte-Atif-Aslam.mp3",
+                 artist:"Atif-Aslam"
              },
              {
                 id:5,
                  name:"Tujhe_Kitna_Chahne_Lage",
-                 file_name:"00000. Tujhe_Kitna_Chahne_Lage.mp3"
+                 file_name:"00000. Tujhe_Kitna_Chahne_Lage.mp3",
+                 artist:"Arijit singh"
              },
              {
                 id:6,
                  name:"Ve Maahi - Kesari",
-                 file_name:"00. Ve Maahi - Kesari.mp3"
+                 file_name:"00. Ve Maahi - Kesari.mp3",
+                 artist:"Arijit singh"
              },
              {
                 id:7,
                  name:"Raataan Lambiyan - Shershaah",
-                 file_name:"Raataan Lambiyan - Shershaah.mp3"
+                 file_name:"Raataan Lambiyan - Shershaah.mp3",
+                 artist:"Jubin Nautiyal"
              },
              {
                 id:8,
                  name:"Chale Aana",
-                 file_name:"0. Chale Aana.mp3"
+                 file_name:"0. Chale Aana.mp3",
+                 artist:"Arman Malik"
              },
              {
                 id:9,
-                 name:"Veham - Armaan Malik",
-                 file_name:"0000. Veham - Armaan Malik.mp3"
+                 name:"Veham",
+                 file_name:"0000. Veham - Armaan Malik.mp3",
+                 artist:"Arman Malik"
              },
              {
                 id:10,
-                 name:"Nayan - Dhvani Bhanushali",
-                 file_name:"0000. Nayan - Dhvani Bhanushali.mp3"
+                 name:"Nayan",
+                 file_name:"0000. Nayan - Dhvani Bhanushali.mp3",
+                 artist:"Dhvani Bhanushali"
              },
              
          ]
@@ -201,7 +231,7 @@ tr:nth-child(even) {
             html+=`<tr>
                      <td>${i+1}</td>
                      <td>${playlist[i].name}</td>
-                     <td>Maria Anders</td>
+                     <td>${playlist[i].artist}</td>
                       <td><button onclick="play(${i})" style="background-color:green; color:white;">Play</button></td>
                        </tr>`
          }
@@ -241,6 +271,7 @@ tr:nth-child(even) {
             }
             var res=random();
             show_name(res);
+            song_count=res;
             audio=new Audio(playlist[res].file_name);
             audio.play();
             is_play=true;
@@ -299,9 +330,11 @@ tr:nth-child(even) {
             }
             if(song_count+1>10)
             {
-                alert("No song found");
+                audio=new Audio(playlist[0].file_name);
                 audio.play();
                 is_play=true;
+                show_name(0);
+                song_count=0;
             }
             else{
 
