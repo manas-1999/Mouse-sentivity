@@ -54,26 +54,88 @@ h1{
         text-align: center;
     }
 
+    /* table styling */
+
+    table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+/* styling buttons */
+.Prev
+{
+    background-color:cornsilk;
+    margin-right: 20px;
+    border: none;
+    outline: none;
+}
+.Next
+{
+    background-color:cornsilk;
+    margin-left: 20px;
+    border: none;
+    outline: none;
+}
+
+
     </style>
 </head>
 <body>
+
+    <div class="table">
+
+        <!-- table -->
+        <table id="t-body">
+            <tr>
+                <th>Sr.no</th>
+              <th>Song</th>
+              <th>Artist & Album</th>
+              <th>Action</th>
+            </tr>
+            <tr>
+
+            </tr>
+          </table>
+     </div>
+
     <div class="style-buttons">
+       
+
         <div class="song-title">
            <h2>Song Name</h2>
            <p id="song-name"></p>
         </div>
-        <h1 class="head-text">Click the button to Random choose a song by computer to you</h1>
+        <h1 class="head-text"></h1>
 
-    <button type="submit" class="buttons c1" id="clicked">Play a song for me</button>
-    <button type="submit" class="buttons c2" id="clicked2">Stop</button>
+    <button type="submit" class="buttons c1" id="clicked">Shuffle all songs</button>
+    <div style="display: flex; width: 100%; justify-content: center;">
+    <button type="submit" onclick="Prev()" class="buttons Prev" id="Prev">Previous</button>
+    <button type="submit" class="buttons c2" onclick="hello2()" id="clicked2">Play/Pause</button>
+    <button type="submit" onclick="Next()" class="buttons Next" id="Next">Next</button>
+    </div>
+</div>
     </div>
 
    
 
     <script>
-        var audio1='Aalu Le Le ! Comedy ! Hindi ! Funny.mp3';
-        var audio2='Khairiyat (Happy) - Arijit Singh.mp3';
-        var audio3='Tujhe Bhoolna Toh Chaaha - Jubin Nautiyal 320 Kbps.mp3';
+        var is_play=false;
+        var song_count=0;
+        var audio=new Audio();
+         let html=document.getElementById("t-body").innerHTML;
+         let t_body=document.getElementById('t-body');
+        
          
          var playlist=[
              {
@@ -133,8 +195,38 @@ h1{
              },
              
          ]
-         var stop_res;
-         var audio=new Audio();
+
+         for(var i=0;i<=10;i++)
+         {
+            html+=`<tr>
+                     <td>${i+1}</td>
+                     <td>${playlist[i].name}</td>
+                     <td>Maria Anders</td>
+                      <td><button onclick="play(${i})" style="background-color:green; color:white;">Play</button></td>
+                       </tr>`
+         }
+             
+        t_body.innerHTML=html;
+
+        function play(var_index)
+        {
+            if(is_play)
+            {
+                audio.pause();
+                is_play=false;
+            }
+            
+             audio=new Audio(playlist[var_index].file_name);
+             audio.play();
+             song_count=var_index;
+             show_name(var_index);
+            // document.getElementById("song-name").innerText=playlist[var_index].name;
+             is_play=true;
+        }
+
+
+        //  randomly called function
+        
          function random()
          {
              return Math.floor(Math.random() * 10);
@@ -142,20 +234,84 @@ h1{
         document.getElementById("clicked").addEventListener("click",hello);
         function hello()
         {
-            
+            if(is_play)
+            {
+                audio.pause();
+                is_play=false;
+            }
             var res=random();
-            console.log(res);
-            stop_res=res;
-            document.getElementById("song-name").innerText=playlist[res].name
+            show_name(res);
             audio=new Audio(playlist[res].file_name);
             audio.play();
+            is_play=true;
         }
 
 
-        document.getElementById("clicked2").addEventListener("click",hello2);
+        // document.getElementById("clicked2").addEventListener("click",hello2);
         function hello2()
         {
-             audio.pause();
+            if(is_play)
+            {
+                audio.pause();
+                is_play=false;
+            }
+            else{
+                audio.play();
+                is_play=true;
+            }
+        }
+        function show_name(value)
+        {
+            document.getElementById("song-name").innerText=playlist[value].name
+        }
+
+       function Prev()
+        {
+            if(is_play)
+            {
+                audio.pause();
+                is_play=false;
+            }
+            if(song_count-1<0)
+            {
+                alert("No song previously found");
+                audio.play();
+                is_play=true;
+            }
+            else{
+
+            audio=new Audio(playlist[song_count-1].file_name);
+            audio.play();
+            is_play=true;
+            show_name(song_count-1);
+            song_count-=1;
+
+            }
+           
+        }
+
+        function Next()
+        {
+            if(is_play)
+            {
+                audio.pause();
+                is_play=false;
+            }
+            if(song_count+1>10)
+            {
+                alert("No song found");
+                audio.play();
+                is_play=true;
+            }
+            else{
+
+            audio=new Audio(playlist[song_count+1].file_name);
+            audio.play();
+            is_play=true;
+            show_name(song_count+1);
+            song_count+=1;
+              }
+            
         }
     </script>
 </body>
