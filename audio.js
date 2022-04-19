@@ -100,8 +100,7 @@ var playlist=[
  ]
 
 
-
- for(var i=0;i<=10;i++)
+ for(var i=0;i<playlist.length;i++)
  {
      html+=`<li>
      <div class="row" onclick="play_click(${i})">
@@ -207,7 +206,10 @@ function updateTime()
 }
 function play_pause()
 {
-    if(is_play)
+    if(audio.src!='')
+    {
+
+        if(is_play)
     {
         audio.pause();
         is_play=false;
@@ -219,6 +221,9 @@ function play_pause()
         is_play=true;
         change_play_pause(is_play);
     }
+
+    }
+    
 }
 function next()
 {
@@ -235,6 +240,7 @@ function next()
         is_play=true;
         show_name(0)
         show_picture(0)
+        change_play_pause(is_play);
         song_count=0;
         shuffle=false;
     }
@@ -245,6 +251,7 @@ function next()
         is_play=true;
         show_name(song_count+1);
         show_picture(song_count+1);
+        change_play_pause(is_play);
         song_count+=1;
         shuffle=false;
     }
@@ -253,7 +260,7 @@ function next()
 
 function play_click(ans)
 {
-    
+   
     if(is_play)
     {
         audio.pause();
@@ -296,6 +303,7 @@ function prev()
         is_play=true;
         show_name(10)
         show_picture(10)
+        change_play_pause(is_play);
         song_count=10;
         shuffle=false;
     }
@@ -306,6 +314,7 @@ function prev()
         is_play=true;
         show_name(song_count-1);
         show_picture(song_count-1);
+        change_play_pause(is_play);
         song_count-=1;
         shuffle=false;
     }
@@ -328,5 +337,5 @@ progress_bar.addEventListener('click',(e)=>{
   let clicked_offset_x=e.offsetX;
   let total_song_duration=audio.duration;
   audio.currentTime=(clicked_offset_x/progress_bar_width)*total_song_duration;
-  play_pause();
+//   play_pause();
 });
