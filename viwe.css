@@ -1,5 +1,8 @@
-/* body{
-    /* background-color: #2596be; */
+ body{
+ /* background-color: #2596be; */
+ user-select: none;
+ cursor: pointer; 
+}
 #guessing
 {
    width: 100%;

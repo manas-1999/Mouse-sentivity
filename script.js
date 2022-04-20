@@ -6,6 +6,9 @@ var guess_box=guessing.querySelector('.guess-box');
 var chances_left=guessing.querySelector('.left p');
 var pig_word=guessing.querySelectorAll('.pig-word .pig');
 var timesection=guessing.querySelector('.time-section .time');
+var h3_guess_box;
+var time_run=false;
+var right=-1;
 var current_minute=0;
 var current_second=0;
 var my_interval;
@@ -104,7 +107,7 @@ var movies=[
         movie_name:'koi mil gya'
     },
     {
-        movie_name:'dhadkan'
+        movie_name:'dhadkan2'
     },
     {
         movie_name:'ramleela'
@@ -182,7 +185,7 @@ var movies=[
         movie_name:'Jab tak hai jaan'
     },
     {
-        movie_name:'Golmaal 3'
+        movie_name:'Golmaal3'
     },
     {
         movie_name:'Dhammal'
@@ -191,7 +194,7 @@ var movies=[
         movie_name:'Hum sath sath hain'
     },
     {
-        movie_name:'Ta ra rum pum'
+        movie_name:'Tara rum pum'
     },
     {
         movie_name:'Khatta Meetha'
@@ -222,7 +225,7 @@ var movies=[
     },
 
     {
-        movie_name:'Happy Phirr Bhag Jayegi'
+        movie_name:'Happy Phir Bhag Jayegi'
     },
     {
         movie_name:'Dil Mange more'
@@ -262,7 +265,7 @@ function show_movie()
 
 for(var i=0;i<current_movie.length;i++)
 {
-    if(current_movie[i]=='a' || current_movie[i]=='e' || current_movie[i]=='i' || current_movie[i]=='o' || current_movie[i]=='u')
+    if(current_movie[i]=='a' || current_movie[i]=='e' || current_movie[i]=='i' || current_movie[i]=='o' || current_movie[i]=='u' || current_movie[i]=='1' || current_movie[i]=='2' || current_movie[i]=='3')
     {
         html+=`<h3 class="movie_header">${current_movie[i].toUpperCase()}</h3>`
     }
@@ -278,9 +281,9 @@ guess_box.innerHTML=html;
 }
 function change()
 {
-   
-    html='';
-    for(var i=0;i<a_z.length;i++)
+    if(current_cut!=-1 || current_second!=0)
+    {
+        for(var i=0;i<a_z.length;i++)
     {
         a_to_z_h4[i].classList.remove('disable');
     }
@@ -292,13 +295,22 @@ function change()
     {
         pig_word[k].classList.remove('color');
     }
+
+    }
+    html='';
+    
     show_movie();
     current_cut=-1;
     clearInterval(my_interval);
+    time_run=false;
+    current_minute=0;
+    current_second=0;
+    timesection.innerText=`${"0" + current_minute + ":" + "0" + current_second}`;
     chances_left.innerText='9';
 }
 function time_change()
 {
+    
     if(current_second>=59)
     {
         current_minute++;
@@ -312,7 +324,7 @@ function time_change()
         change();
     }
     else{
-        console.log(current_minute + ":" + current_second);
+    
         current_second++;
     }
     if(current_second>=10)
@@ -327,14 +339,19 @@ function time_change()
     
 }
 
+
+
 function i_am_change(res)
 { 
-   my_interval=setInterval(time_change, 1000);
+    if(!time_run)
+    {
+        my_interval=setInterval(time_change, 1000);
+        time_run=true;
+    }
     a_to_z_h4=guessing.querySelectorAll('.a-to-z .abcd');
      a_to_z_h4[res].classList.add('disable');
      
-     var h3_guess_box=guessing.querySelectorAll('.guess-box .movie_header');
-     console.log(h3_guess_box);
+     h3_guess_box=guessing.querySelectorAll('.guess-box .movie_header');
 
    for(var k=0;k<current_movie.length;k++)
    {
@@ -343,24 +360,37 @@ function i_am_change(res)
           
            h3_guess_box[k].innerText=`${current_movie[k].toUpperCase()}`;
            jasoos++;
+           
        }
+
    }
+  
 
    if(jasoos==-1)
    {
       current_cut++;
-    //   console.log(current_cut);
+   
       chances_left.innerText=`${9-current_cut-1}`;
       change_current_cut();
       if(9-current_cut-1==0)
       {
-          alert(`${current_movie}`);
-          change_current_cut();
-          alert("you loose the game!!!");
-          change();
+        change_current_cut();
+        for(var k=0;k<current_movie.length;k++)
+        {
+            if(h3_guess_box[k].innerText!='/'){
+               console.log(k);
+                h3_guess_box[k].innerText=current_movie[k].toUpperCase();
+            }
+        }
+          setTimeout(function () 
+          {
+            alert("you loose the game!!!");
+            change();
+          },300);
+          
       }
       if(current_cut>=3 && current_cut<=4){
-        //   console.log(pig_word[0]);
+
         pig_word[0].classList.add('color');
       }
       else if(current_cut>=5 && current_cut<=6)
@@ -373,8 +403,29 @@ function i_am_change(res)
 
    }
    jasoos=-1;
-
+   if(check_h3() && 9-current_cut-1!=0)
+   {
+    setTimeout( function () 
+    { 
+        alert( "Excellent"); 
+        change();
+    },300 );
+   }
       
+}
+
+function check_h3()
+{
+    for(var i=0;i<current_movie.length;i++)
+    {    
+        if(h3_guess_box[i].innerText=='?')
+        {
+            // right++;
+            return false;
+        }
+    }
+        return true;
+    
 }
 
 function change_current_cut()
